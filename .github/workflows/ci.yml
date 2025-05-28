@@ -1,0 +1,60 @@
+name: CI - Lint & Build
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./client
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # --- FRONTEND SETUP ---
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Lint frontend code
+        run: npm run lint
+
+      - name: Build frontend
+        run: npm run build
+
+  backend:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./server
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # --- BACKEND SETUP ---
+      - name: Install backend dependencies
+        run: npm ci
+
+      - name: Lint backend (optional if you have lint script)
+        run: npm run lint || echo "No lint script defined"
+
+      - name: Run backend build/test (optional)
+        run: echo "Add test/build command here"
