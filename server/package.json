@@ -1,12 +1,12 @@
 {
   "name": "tripmate-server",
   "version": "1.0.0",
-  "main": "dist/server.js",
+  "main": "dist/index.js",
   "type": "commonjs",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/server.js",
-    "dev": "ts-node-dev --respawn --transpile-only server.ts"
+    "start": "node dist/index.js",
+    "dev": "ts-node-dev --respawn --transpile-only index.ts"
   },
   "dependencies": {
     "apollo-server-express": "^3.11.1",
