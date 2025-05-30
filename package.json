@@ -1,23 +1,17 @@
 {
-    "name": "tripmate-server",
-    "version": "1.0.0",
-    "type": "module",
-    "scripts": {
-      "start": "node index.js",
-      "dev": "nodemon index.js",
-      "lint": "eslint . --ext .js"
-    },
-    "dependencies": {
-      "apollo-server-express": "^3.11.1",
-      "bcrypt": "^5.1.0",
-      "cors": "^2.8.5",
-      "dotenv": "^16.3.1",
-      "express": "^4.18.2",
-      "graphql": "^16.6.0",
-      "jsonwebtoken": "^9.0.0",
-      "mongoose": "^7.2.2"
-    },
-    "devDependencies": {
-      "nodemon": "^2.0.22"
-    }
-  }  
+  "name": "tripmate-travel-planner-app",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "install:all": "npm install --workspaces",
+    "dev": "concurrently \"npm run dev --workspace server\" \"npm run dev --workspace client\"",
+    "build": "npm run build --workspace client && npm run build --workspace server"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
