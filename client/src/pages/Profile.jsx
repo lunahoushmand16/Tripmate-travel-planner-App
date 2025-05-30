@@ -6,45 +6,56 @@ const Profile = () => {
   const [selectedTrip, setSelectedTrip] = useState(null);
 
   const user = {
-    username: 'NinaWood',
-    email: 'wnicolenina@gmail.com',
+    username: 'KeeOD',
+    email: 'KeelinOD@gmail.com',
+    profileImage: '/keelin-profile.jpg',
     itinerary: [
       {
         destination: 'Greece',
         image: '/Greece.jpg',
         description: 'Explore ancient ruins in Athens, enjoy Santorini sunsets, and savor Mediterranean cuisine.',
-        details: [
-          { day: 'Day 1 – July 14, 2025', time: '9:00 AM', activity: 'Breakfast in Athens' },
-          { day: 'Day 1 – July 14, 2025', time: '11:00 AM', activity: 'Acropolis tour' },
-          { day: 'Day 1 – July 14, 2025', time: '6:00 PM', activity: 'Santorini sunset dinner' },
-        ]
+        date: 'May 18–25, 2025',
+        schedule: [
+          { time: '10:00 AM', activity: 'Visit Acropolis' },
+          { time: '1:00 PM', activity: 'Lunch in Plaka' },
+          { time: '3:00 PM', activity: 'Sunset at Oia' },
+        ],
       },
       {
         destination: 'Paris',
         image: '/paris.jpg',
         description: 'Visit the Eiffel Tower, stroll the Seine, and explore iconic art at the Louvre.',
-        details: [
-          { day: 'Day 2 – September 3, 2025', time: '10:00 AM', activity: 'Eiffel Tower visit' },
-          { day: 'Day 2 – September 3, 2025', time: '1:00 PM', activity: 'Lunch by the Seine' },
-          { day: 'Day 2 – September 3, 2025', time: '4:00 PM', activity: 'Explore the Louvre' },
-        ]
+        date: 'August 2–10, 2025',
+        schedule: [
+          { time: '9:00 AM', activity: 'Eiffel Tower Tour' },
+          { time: '12:00 PM', activity: 'Lunch by the Seine' },
+          { time: '3:00 PM', activity: 'Louvre Museum' },
+        ],
       },
       {
         destination: 'Thailand',
         image: '/Thailand.jpg',
         description: 'Island hop in Krabi, explore Bangkok temples, and dive into spicy street food culture.',
-        details: [
-          { day: 'Day 3 – February 22, 2026', time: '8:00 AM', activity: 'Island hopping in Krabi' },
-          { day: 'Day 3 – February 22, 2026', time: '12:00 PM', activity: 'Bangkok street food tour' },
-          { day: 'Day 3 – February 22, 2026', time: '5:00 PM', activity: 'Wat Arun temple tour' },
-        ]
-      }
-    ]
+        date: 'March 12–20, 2026',
+        schedule: [
+          { time: '10:00 AM', activity: 'Island hopping in Krabi' },
+          { time: '1:00 PM', activity: 'Street food tour' },
+          { time: '4:00 PM', activity: 'Temple exploration' },
+        ],
+      },
+    ],
   };
 
   return (
     <div className="profile">
       <Navbar />
+
+      {/* Profile Image */}
+      <div className="profile-container">
+        <div className="profile-image-container">
+          <img src={user.profileImage} alt="Profile" className="profile-image" />
+        </div>
+      </div>
 
       <h1 className="page-title">Welcome, {user.username}</h1>
       <p className="email">{user.email}</p>
@@ -56,27 +67,27 @@ const Profile = () => {
             <div key={index} className="trip-card">
               <img src={trip.image} alt={trip.destination} className="trip-image" />
               <h3>{trip.destination}</h3>
+              <p className="trip-date">{trip.date}</p>
               <p>{trip.description}</p>
-              <button className="view-btn" onClick={() => setSelectedTrip(trip)}>
-                View Trip
-              </button>
+              <button className="view-btn" onClick={() => setSelectedTrip(trip)}>View Trip</button>
             </div>
           ))}
         </div>
       </div>
 
+      {/* Modal */}
       {selectedTrip && (
         <div className="modal-overlay" onClick={() => setSelectedTrip(null)}>
-          <div className="modal-content animate" onClick={(e) => e.stopPropagation()}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <button className="close-btn" onClick={() => setSelectedTrip(null)}>×</button>
             <img src={selectedTrip.image} alt={selectedTrip.destination} className="modal-image" />
             <h2>{selectedTrip.destination}</h2>
+            <p className="trip-date">{selectedTrip.date}</p>
             <p>{selectedTrip.description}</p>
             <ul className="trip-details-list">
-              {selectedTrip.details.map((item, i) => (
-                <li key={i}>
-                  <strong>{item.day}</strong><br />
-                  <span>{item.time} – {item.activity}</span>
+              {selectedTrip.schedule.map((item, index) => (
+                <li key={index}>
+                  <span className="time">{item.time}</span> – {item.activity}
                 </li>
               ))}
             </ul>
