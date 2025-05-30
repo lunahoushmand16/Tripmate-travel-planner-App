@@ -57,14 +57,40 @@
 }
 
 .carousel-container {
-  max-width: 800px;
-  margin: 2rem auto;
+  max-width: 1000px;
+  margin: 3rem auto;
 }
 
 .carousel-container img {
   width: 100%;
-  height: 300px;
-  object-fit: cover; /* ⬅️ fills the box without gray space */
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  height: 450px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.footer {
+  background-color: #131515;
+  color: #FFFAFB;
+  padding: 2rem;
+  text-align: center;
+  border-top: 1px solid #2B2C28;
+}
+
+.footer-icons {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.footer-icons a {
+  color: #FFFAFB;
+  font-size: 1.8rem;
+  transition: transform 0.2s ease;
+}
+
+.footer-icons a:hover {
+  transform: scale(1.2);
+  color: #7DE2D1;
 }
