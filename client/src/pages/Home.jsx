@@ -3,7 +3,9 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import './Home.css';
-import { Link } from 'react-router-dom'; // 🔁 Add this import at the top
+import { Link } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+
 
 const Home = () => {
   const sliderSettings = {
@@ -18,6 +20,7 @@ const Home = () => {
 
   return (
     <div className="home">
+      <Navbar />
       <nav className="navbar">
         <div className="logo">TripMate</div>
         <ul className="nav-links">

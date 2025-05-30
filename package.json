@@ -21,6 +21,9 @@
   "devDependencies": {
     "concurrently": "^8.2.2"
   },
+  "dependencies": {
+    "react-router-dom": "^7.6.1"
+  },
   "engines": {
     "node": ">=18"
   }

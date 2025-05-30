@@ -1,0 +1,230 @@
+.profile {
+  font-family: sans-serif;
+  background-color: #131515;
+  color: #FFFAFB;
+  min-height: 100vh;
+  padding-bottom: 2rem;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2B2C28;
+  padding: 1rem 2rem;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #7DE2D1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.logo img {
+  width: 30px;
+  height: 30px;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-links li a {
+  color: #FFFAFB;
+  text-decoration: none;
+}
+
+.page-title {
+  text-align: center;
+  margin-top: 2rem;
+  color: #339989;
+  font-size: 2.5rem;
+}
+
+.email {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #7DE2D1;
+  margin-bottom: 2rem;
+}
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-image-container {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.profile-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #339989;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.3);
+}
+
+.itinerary-section {
+  text-align: center;
+  padding: 2rem;
+}
+
+.itinerary-section h2 {
+  color: #339989;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.trip-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 1rem;
+}
+
+.trip-card {
+  background-color: #2B2C28;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  width: 220px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.1);
+}
+
+.trip-image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+}
+
+.trip-card p {
+  margin: 0.5rem 0;
+  color: #F8F7FF;
+}
+
+.trip-date {
+  font-weight: bold;
+  color: #7DE2D1;
+  margin: 0.3rem 0 0.5rem;
+}
+
+.view-btn {
+  background-color: #7DE2D1;
+  border: none;
+  padding: 0.5rem 1rem;
+  color: #131515;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(19, 21, 21, 0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  padding: 2rem;
+  animation: fadeIn 0.3s ease;
+  overflow-y: auto;
+}
+
+.modal-content {
+  background-color: #2B2C28;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 600px;
+  color: #FFFAFB;
+  position: relative;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+  animation: slideUp 0.4s ease;
+}
+
+.modal-image {
+  width: 100%;
+  max-height: 250px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 1.8rem;
+  background: none;
+  border: none;
+  color: #FFFAFB;
+  cursor: pointer;
+}
+
+.trip-details-list {
+  text-align: left;
+  margin-top: 1.5rem;
+  padding-left: 1rem;
+  list-style: disc;
+}
+
+.trip-details-list li {
+  margin-bottom: 1rem;
+  color: #D3D3D3;
+}
+
+.footer {
+  text-align: center;
+  padding: 2rem 1rem 1rem;
+  background-color: #2B2C28;
+  margin-top: 3rem;
+}
+
+.footer p {
+  color: #FFFAFB;
+}
+
+.footer-icons {
+  margin-top: 1rem;
+}
+
+.footer-icons a {
+  color: #FFFAFB;
+  margin: 0 0.5rem;
+  font-size: 1.5rem;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
