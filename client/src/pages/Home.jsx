@@ -6,6 +6,7 @@ import './Home.css';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 
+
 const Home = () => {
   const sliderSettings = {
     dots: true,
@@ -20,6 +21,15 @@ const Home = () => {
   return (
     <div className="home">
       <Navbar />
+      <nav className="navbar">
+        <div className="logo">TripMate</div>
+        <ul className="nav-links">
+          <li><a href="#">Dashboard</a></li>
+          <li><a href="/new-trip">New Trip</a></li> {/* ✅ THIS LINE make the NewTrip tab clickable */}
+          <li><a href="#">Profile</a></li>
+          <li><a href="#">Log Out</a></li>
+        </ul>
+      </nav>
 
       <div className="hero">
         <h1>Welcome to TripMate</h1>
