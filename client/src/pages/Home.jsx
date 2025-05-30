@@ -3,9 +3,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import './Home.css';
-import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-
 
 const Home = () => {
   const sliderSettings = {
@@ -20,16 +18,7 @@ const Home = () => {
 
   return (
     <div className="home">
-      <Navbar />
-      <nav className="navbar">
-        <div className="logo">TripMate</div>
-        <ul className="nav-links">
-          <li><a href="#">Dashboard</a></li>
-          <li><a href="/new-trip">New Trip</a></li> {/* ✅ THIS LINE make the NewTrip tab clickable */}
-          <li><a href="#">Profile</a></li>
-          <li><a href="#">Log Out</a></li>
-        </ul>
-      </nav>
+      <Navbar /> {/* ✅ Keep this only */}
 
       <div className="hero">
         <h1>Welcome to TripMate</h1>
