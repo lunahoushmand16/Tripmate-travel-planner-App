@@ -13,15 +13,17 @@ async function startApolloServer() {
   const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: authMiddleware,
+    context: ({ req }: { req: Request }) => authMiddleware({ req }),
   });
 
   await server.start();
   server.applyMiddleware({ app: app as any });
 
+  // Express middleware
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
 
+  // Serve static files in production
   if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../client/dist')));
     app.get('*', (req: Request, res: Response) => {
@@ -36,4 +38,6 @@ async function startApolloServer() {
   });
 }
 
-startApolloServer();
+startApolloServer().catch((err) => {
+  console.error('❌ Error starting Apollo Server:', err);
+});
