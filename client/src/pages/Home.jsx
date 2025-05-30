@@ -41,6 +41,28 @@ const Home = () => {
           <div><img src="/Roatan2.jpg" alt="Roatan" /></div>
         </Slider>
       </div>
+
+      <footer className="footer">
+        <p>© 2025 TripMate. All rights reserved.</p>
+        <div className="footer-icons">
+          <a
+            href="https://github.com/lunahoushmand16/Tripmate-travel-planner-App"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub"
+          >
+            <i className="fab fa-github"></i>
+          </a>
+          <a
+            href="https://linkedin.com/in/yourusername"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+          >
+            <i className="fab fa-linkedin"></i>
+          </a>
+        </div>
+      </footer>
     </div>
   );
 };
