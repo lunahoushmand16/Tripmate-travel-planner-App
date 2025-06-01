@@ -14,6 +14,7 @@ async function startApolloServer() {
     typeDefs,
     resolvers,
     context: authMiddleware,
+    persistedQueries: false,
   });
 
   await server.start();
