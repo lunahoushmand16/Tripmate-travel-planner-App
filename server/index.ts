@@ -23,12 +23,14 @@ async function startApolloServer() {
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
 
-  if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '../client/dist/index.html')));
-    app.get('*', (req: Request, res: Response) => {
-      res.sendFile(path.join(__dirname, '../client/dist/index.html'));
-    });
-  }
+ const clientBuildPath = path.resolve(__dirname, '..', 'client', 'dist');
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(clientBuildPath));
+  app.get('*', (req: Request, res: Response) => {
+    res.sendFile(path.join(clientBuildPath, 'index.html'));
+  });
+}
 
   db.once('open', () => {
     app.listen(PORT, () => {
