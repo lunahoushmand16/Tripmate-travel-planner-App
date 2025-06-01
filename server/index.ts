@@ -23,8 +23,8 @@ async function startApolloServer() {
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
 
- const clientBuildPath = path.resolve(__dirname, '..', 'client', 'dist');
-
+ const clientBuildPath = path.resolve(__dirname, '../../client/dist');
+ 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(clientBuildPath));
   app.get('*', (req: Request, res: Response) => {
