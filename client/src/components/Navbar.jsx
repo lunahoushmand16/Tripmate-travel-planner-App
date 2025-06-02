@@ -10,7 +10,7 @@ const Navbar = () => {
         <span className="logo-text">TripMate</span>
       </Link>
       <ul className="nav-links">
-        <li><Link to="/profile">New Trip</Link></li>
+        <li><Link to="/new-trip">New Trip</Link></li>
         <li><Link to="/profile">Profile</Link></li>
         <li><Link to="/">Log Out</Link></li>
       </ul>

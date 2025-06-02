@@ -4,6 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import './Home.css';
 import Navbar from '../components/Navbar';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   const sliderSettings = {
@@ -23,7 +24,11 @@ const Home = () => {
       <div className="hero">
         <h1>Welcome to TripMate</h1>
         <p>Plan and organize your trips with ease.</p>
-        <button className="login-btn">Login</button>
+        <button className="login-btn">
+        <Link to="/login" style={{ color: 'inherit', textDecoration: 'none' }}>
+        Login
+        </Link>
+        </button>
       </div>
 
       <div className="carousel-container">
