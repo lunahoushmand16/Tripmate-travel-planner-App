@@ -58,3 +58,27 @@
   button[type="button"] {
     background-color: #888;
   }
+
+  .autocomplete-suggestions {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 0;
+    background-color: #2B2C28;
+    border: 1px solid #7DE2D1;
+    border-radius: 4px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 5;
+    position: absolute;
+  }
+  
+  .autocomplete-suggestions li {
+    padding: 0.5rem;
+    cursor: pointer;
+    color: #FFFAFB;
+  }
+  
+  .autocomplete-suggestions li:hover {
+    background-color: #339989;
+  }  
+  
