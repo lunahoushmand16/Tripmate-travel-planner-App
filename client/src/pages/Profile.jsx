@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
 import './Profile.css';
 import Navbar from '../components/Navbar';
+import { useQuery } from '@apollo/client';
+import { GET_ME } from '../utils/queries';
 
 const Profile = () => {
   const [selectedTrip, setSelectedTrip] = useState(null);
+  
+  // Add useQuery(GET_ME) to get real logged-in user
+  // Build your user object from live data
+  const { loading, data } = useQuery(GET_ME);
+
+  if (loading) return <p>Loading profile...</p>;
+  if (!data?.me) return <p>Not authenticated</p>;
 
   const user = {
-    username: 'KeeOD',
-    email: 'KeelinOD@gmail.com',
+    username: data.me.username,
+    email: data.me.email,
     profileImage: '/keelin-profile.jpg',
     itinerary: [
       {
