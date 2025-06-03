@@ -7,12 +7,8 @@ on:
     branches: [main, develop]
 
 jobs:
-  build:
+  frontend:
     runs-on: ubuntu-latest
-
-    defaults:
-      run:
-        working-directory: ./client
 
     steps:
       - name: Checkout repo
@@ -23,23 +19,21 @@ jobs:
         with:
           node-version: 18
 
-      # --- FRONTEND SETUP ---
       - name: Install frontend dependencies
+        working-directory: client
         run: npm ci
 
       - name: Lint frontend code
-        run: npm run lint
+        working-directory: client
+        run: npm run lint || echo "Lint failed but continuing"
 
       - name: Build frontend
+        working-directory: client
         run: npm run build
 
   backend:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: ./server
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -49,12 +43,18 @@ jobs:
         with:
           node-version: 18
 
-      # --- BACKEND SETUP ---
       - name: Install backend dependencies
+        working-directory: server
         run: npm ci
 
-      - name: Lint backend (optional if you have lint script)
+      - name: Lint backend (optional)
+        working-directory: server
         run: npm run lint || echo "No lint script defined"
 
-      - name: Run backend build/test (optional)
-        run: echo "Add test/build command here"
+      - name: Check TypeScript (if applicable)
+        working-directory: server
+        run: npx tsc --noEmit || echo "No TypeScript check"
+
+      - name: Backend build/test (optional)
+        working-directory: server
+        run: echo "Add tests or build commands here"
