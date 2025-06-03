@@ -9,6 +9,7 @@ import { authMiddleware } from './utils/auth';
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// Main function to start Apollo Server and Express app
 async function startApolloServer() {
   const server = new ApolloServer({
     typeDefs,
@@ -24,7 +25,9 @@ async function startApolloServer() {
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
 
- const clientBuildPath = path.resolve(__dirname, '../../client/dist');
+// Serve static files from the client build in production
+
+const clientBuildPath = path.resolve(__dirname, '../../client/dist');
  
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(clientBuildPath));
@@ -33,13 +36,14 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
+  // Start the server after MongoDB connection is open
   db.once('open', () => {
     app.listen(PORT, () => {
       console.log(`🌍 Now listening on http://localhost:${PORT}${server.graphqlPath}`);
     });
   });
 }
-
+// Start the server and catch errors
 startApolloServer().catch((err) => {
   console.error('❌ Error starting Apollo Server:', err);
 });
