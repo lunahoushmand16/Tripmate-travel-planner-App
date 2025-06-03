@@ -1,0 +1,84 @@
+.new-trip-page {
+    background-color: #131515;
+    color: #FFFAFB;
+    padding: 2rem;
+    min-height: 100vh;
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .trip-form {
+    background-color: #2B2C28;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.4);
+    max-width: 600px;
+    width: 100%;
+  }
+  
+  .trip-form label {
+    display: block;
+    margin-bottom: 1rem;
+    color: #FFFAFB;
+  }
+  
+  .trip-form input {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.3rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  .date-inputs {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  
+  .form-buttons {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+  
+  button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #339989;
+    color: #fff;
+    font-weight: bold;
+  }
+  
+  button[type="button"] {
+    background-color: #888;
+  }
+
+  .autocomplete-suggestions {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 0;
+    background-color: #2B2C28;
+    border: 1px solid #7DE2D1;
+    border-radius: 4px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 5;
+    position: absolute;
+  }
+  
+  .autocomplete-suggestions li {
+    padding: 0.5rem;
+    cursor: pointer;
+    color: #FFFAFB;
+  }
+  
+  .autocomplete-suggestions li:hover {
+    background-color: #339989;
+  }  
+  
