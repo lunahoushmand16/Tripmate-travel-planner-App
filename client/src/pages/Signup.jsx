@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../utils/mutations';
 import { useNavigate, Link } from 'react-router-dom';
+import { useApolloClient } from '@apollo/client';
 import './NewTrip.css'; // Reuse styles
 
 const Signup = () => {
   const [formState, setFormState] = useState({ username: '', email: '', password: '' });
   const [addUser, { error }] = useMutation(ADD_USER);
   const navigate = useNavigate();
+  const client = useApolloClient();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,6 +21,7 @@ const Signup = () => {
     try {
       const { data } = await addUser({ variables: formState });
       localStorage.setItem('id_token', data.addUser.token);
+      await client.resetStore();  // 👈 forces fresh fetch of `GET_ME`
       navigate('/profile'); // ✅ Go to profile after signup
     } catch (err) {
       console.error('Signup failed:', err);
