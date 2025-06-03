@@ -13,7 +13,8 @@ async function startApolloServer() {
   const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: ({ req }: { req: Request }) => authMiddleware({ req }),
+    context: authMiddleware,
+    persistedQueries: false,
   });
 
   await server.start();
@@ -23,13 +24,14 @@ async function startApolloServer() {
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
 
-  // Serve static files in production
-  if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '../client/dist')));
-    app.get('*', (req: Request, res: Response) => {
-      res.sendFile(path.join(__dirname, '../client/dist/index.html'));
-    });
-  }
+ const clientBuildPath = path.resolve(__dirname, '../../client/dist');
+ 
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(clientBuildPath));
+  app.get('*', (req: Request, res: Response) => {
+    res.sendFile(path.join(clientBuildPath, 'index.html'));
+  });
+}
 
   db.once('open', () => {
     app.listen(PORT, () => {
