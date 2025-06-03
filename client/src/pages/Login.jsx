@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN } from '../utils/mutations';
-import { useNavigate, Link } from 'react-router-dom'; // ✅
+import { useNavigate, Link } from 'react-router-dom'; 
+import { useApolloClient } from '@apollo/client';
 import './NewTrip.css'; // reuse the same styles
 
 
@@ -11,12 +12,18 @@ const Login = () => {
   const [login, { error }] = useMutation(LOGIN);
   const navigate = useNavigate(); // ✅
 
+  // 👇 Get Apollo Client instance
+  const client = useApolloClient();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const { data } = await login({ variables: { email, password } });
       localStorage.setItem('id_token', data.login.token);
+
+      // ✅ IMPORTANT: Reset Apollo store to refetch queries like GET_ME
+      await client.resetStore();
       navigate('/profile');
     } catch (err) {
       console.error('Login failed:', err);
