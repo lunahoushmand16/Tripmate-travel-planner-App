@@ -228,3 +228,43 @@
   from { transform: translateY(30px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
+
+/* ============================= */
+/* 📱 Responsive Layout Additions */
+/* ============================= */
+@media (max-width: 768px) {
+  .trip-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .trip-card {
+    width: 90%;
+    max-width: 320px;
+  }
+
+  .profile-image {
+    width: 100px;
+    height: 100px;
+  }
+
+  .modal-content {
+    padding: 1rem;
+  }
+
+  .page-title {
+    font-size: 2rem;
+  }
+
+  .itinerary-section h2 {
+    font-size: 1.5rem;
+  }
+
+  .trip-details-list {
+    font-size: 0.95rem;
+  }
+
+  .footer-icons a {
+    font-size: 1.3rem;
+  }
+}
