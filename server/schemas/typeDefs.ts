@@ -1,5 +1,5 @@
 import { gql } from 'apollo-server-express';
-
+// GraphQL schema definitions for queries and mutations
 export const typeDefs = gql`
   type User {
     _id: ID!

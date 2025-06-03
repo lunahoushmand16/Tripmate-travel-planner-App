@@ -12,11 +12,11 @@ interface Payload {
   email: string;
   _id: string;
 }
-
+// Helper to sign JWT for a user
 export function signToken({ username, email, _id }: Payload): string {
   return jwt.sign({ data: { username, email, _id } }, secret, { expiresIn: expiration });
 }
-
+// Middleware to get user from JWT
 export function authMiddleware({ req }: { req: Request & { user?: Payload } }): Request {
   let token = req.body.token || req.query.token || req.headers.authorization;
 
