@@ -17,7 +17,7 @@ const Profile = () => {
   const user = {
     username: data.me.username,
     email: data.me.email,
-    profileImage: '/keelin-profile.jpg',
+    profileImage: '/profile photo1.jpg',
     itinerary: [
       {
         destination: 'Greece',
