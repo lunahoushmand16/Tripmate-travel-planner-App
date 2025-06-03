@@ -15,10 +15,8 @@ const NewTrip = () => {
   const [selectedDestination, setSelectedDestination] = useState('');
   const navigate = useNavigate();
 
-  const [addTrip] = useMutation(ADD_TRIP);
-
   // ✅ Correct useEffect for fetching suggestions from GeoDB API
-  useEffect(() => {
+    useEffect(() => {
     const fetchSuggestions = async () => {
       if (destination.length < 2) {
         setSuggestions([]);
@@ -48,34 +46,36 @@ const NewTrip = () => {
     fetchSuggestions();
   }, [destination]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log("Submitting form...");
+const [addTrip] = useMutation(ADD_TRIP, {
+  refetchQueries: ['Me'], // or your actual profile query name
+});
 
-    try {
-      await addTrip({
-        variables: {
-          title: tripName,
-          startDate,
-          endDate,
-          destinations: [
-            {
-              name: selectedDestination || destination, // ✅ fallback in case nothing was clicked
-              location: selectedDestination || destination,
-              arrivalDate: startDate,
-              departureDate: endDate,
-              activities: [],
-            },
-          ],
-          notes: '',
-        },
-      });
-
-      navigate('/profile');
-    } catch (err) {
-      console.error('❌ Error creating trip:', err);
-    }
-  };
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    await addTrip({
+      variables: {
+        title: tripName,
+        startDate,
+        endDate,
+        destinations: [
+          {
+            name: selectedDestination || destination,
+            location: selectedDestination || destination,
+            arrivalDate: startDate,
+            departureDate: endDate,
+            activities: [],
+          },
+        ],
+        notes: '',
+      },
+    });
+    // Optionally, await refetch();
+    navigate('/profile');
+  } catch (err) {
+    console.error('❌ Error creating trip:', err);
+  }
+};
 
   const handleCancel = () => {
     navigate('/');
