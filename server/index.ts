@@ -10,16 +10,18 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Main function to start Apollo Server and Express app
-async function startApolloServer() {
-  const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-    context: authMiddleware,
-    persistedQueries: false,
-  });
 
-  await server.start();
-  server.applyMiddleware({ app: app as any });
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: authMiddleware,
+});
+
+if (process.env.ENABLE_GRAPHQL !== 'false') {
+  (async () => {
+    await server.start();
+    server.applyMiddleware({ app: app as any });
+  })();
 
   // Express middleware
   app.use(express.urlencoded({ extended: false }));
@@ -43,7 +45,3 @@ if (process.env.NODE_ENV === 'production') {
     });
   });
 }
-// Start the server and catch errors
-startApolloServer().catch((err) => {
-  console.error('❌ Error starting Apollo Server:', err);
-});
