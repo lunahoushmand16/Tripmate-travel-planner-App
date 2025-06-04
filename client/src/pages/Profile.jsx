@@ -3,7 +3,7 @@ import './Profile.css';
 import Navbar from '../components/Navbar';
 import { useQuery } from '@apollo/client';
 import { GET_ME } from '../utils/queries';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom'; // ✅ ADDED Link for profile
 
 const Profile = () => {
   const [selectedTrip, setSelectedTrip] = useState(null);
@@ -15,12 +15,24 @@ const Profile = () => {
 
   useEffect(() => {
     if (!loading && !data?.me) {
-      navigate('/'); // ✅ redirect to homepage if not logged in
+      // ✅ UPDATED: no redirect here anymore
+      // We’ll show a fallback UI instead of redirecting
     }
   }, [loading, data]);
 
   if (loading) return <p>Loading profile...</p>;
-  if (!data?.me) return null; // ✅ safely return nothing, we already redirected
+  // ✅ ADDED: Handle unauthenticated user with centered message
+  if (!data?.me) {
+    return (
+      <div className="profile not-authenticated">
+        <Navbar />
+        <div className="centered-message">
+          <p>🔒 You must be logged in to view your profile.</p>
+          <Link to="/" className="login-link">Click here to log in</Link>
+        </div>
+      </div>
+    );
+  }
   
   const user = data.me;
   const trips = user.travelPlans || [];
