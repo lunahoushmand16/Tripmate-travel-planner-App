@@ -20,8 +20,11 @@ export const GET_ME = gql`
           arrivalDate
           departureDate
           activities
+          __typename  # ✅ REQUIRED for Apollo cache
         }
+        __typename  # ✅ REQUIRED
       }
+      __typename
     }
   }
 `;

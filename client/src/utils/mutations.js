@@ -26,7 +26,6 @@ export const ADD_USER = gql`
   }
 `;
 
-
 export const ADD_TRIP = gql`
   mutation AddTrip(
     $title: String!
@@ -44,6 +43,18 @@ export const ADD_TRIP = gql`
     ) {
       _id
       title
+      startDate
+      endDate
+      notes
+      destinations {
+        name
+        location
+        arrivalDate
+        departureDate
+        activities
+        __typename   # ✅ add this
+      }
+      __typename     # ✅ and this
     }
   }
 `;
