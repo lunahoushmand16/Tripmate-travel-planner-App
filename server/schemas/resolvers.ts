@@ -8,12 +8,14 @@ import axios from 'axios';
 export const resolvers: IResolvers = {
   Query: {
     // Get current user info
+    // ✅ Populates user's travel plans so they show in the frontend
     me: async (_parent, _args, context) => {
-      if (context.user) {
-        return await User.findById(context.user._id);
-      }
-      throw new Error('Not authenticated');
+       if (context.user) {
+         return await User.findById(context.user._id).populate('travelPlans');
+       }
+       throw new Error('Not authenticated');
     },
+
     // Get a travel plan by ID
     getMyTravelPlans: async (_parent, _args, context) => {
       if (!context.user) throw new Error('Not authenticated');
@@ -59,11 +61,23 @@ export const resolvers: IResolvers = {
       const token = signToken(user);
       return { token, user };
     },
-    // Add a new travel plan
+
+    // ✅ UPDATED to push travelPlan._id into user's travelPlans array
     addTravelPlan: async (_parent, args, context) => {
       if (!context.user) throw new Error('Not authenticated');
-      return TravelPlan.create({ ...args, userId: context.user._id });
-    },
+      // ✅ Create new trip
+      const travelPlan = await TravelPlan.create({ ...args, userId: context.user._id });
+
+      // ✅ Push new trip's ID into user's travelPlans array
+      await User.findByIdAndUpdate(
+      context.user._id,
+      { $push: { travelPlans: travelPlan._id } },
+      { new: true }
+    );
+
+    return travelPlan;
+   },
+
     // Update an existing travel plan
     updateTravelPlan: async (_parent, { id, ...rest }, context) => {
       if (!context.user) throw new Error('Not authenticated');

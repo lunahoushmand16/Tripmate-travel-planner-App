@@ -1,4 +1,4 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model, Document, Types } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 
 export interface IUser extends Document {
@@ -6,12 +6,14 @@ export interface IUser extends Document {
   email: string;
   password: string;
   isCorrectPassword(password: string): Promise<boolean>;
+  travelPlans?: Types.ObjectId[]; // ✅ travel plan
 }
 
 const userSchema = new Schema<IUser>({
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true, match: /.+@.+\..+/ },
-  password: { type: String, required: true }
+  password: { type: String, required: true },
+  travelPlans: [{ type: Schema.Types.ObjectId, ref: 'TravelPlan' }] // ✅ added this for Travel plan
 });
 
 // Hash password before saving

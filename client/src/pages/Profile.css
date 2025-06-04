@@ -126,6 +126,12 @@
   margin: 0.3rem 0 0.5rem;
 }
 
+.itinerary-heading {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+}
+
 .view-btn {
   background-color: #7DE2D1;
   border: none;
