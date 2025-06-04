@@ -24,14 +24,44 @@ const NewTrip = () => {
   const navigate = useNavigate();
 
   // Fetch city suggestions for the currently edited destination
+  // useEffect(() => {
+  //   if (selectedDestIdx === null) return;
+  //   const dest = destinations[selectedDestIdx];
+  //   if (!dest || dest.name.length < 2) {
+  //     setSuggestions([]);
+  //     return;
+  //   }
+  //   const fetchSuggestions = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?namePrefix=${dest.name}`,
+  //         {
+  //           method: 'GET',
+  //           headers: {
+  //             'X-RapidAPI-Key': import.meta.env.VITE_RAPIDAPI_KEY,
+  //             'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com',
+  //           },
+  //         }
+  //       );
+  //       const data = await response.json();
+  //       setSuggestions(Array.isArray(data?.data) ? data.data : []);
+  //     } catch (error) {
+  //       setSuggestions([]);
+  //     }
+  //   };
+  //   fetchSuggestions();
+  // }, [destinations, selectedDestIdx]);
+
   useEffect(() => {
-    if (selectedDestIdx === null) return;
-    const dest = destinations[selectedDestIdx];
-    if (!dest || dest.name.length < 2) {
-      setSuggestions([]);
-      return;
-    }
-    const fetchSuggestions = async () => {
+    const timeout = setTimeout(async () => {
+      if (selectedDestIdx === null) return;
+  
+      const dest = destinations[selectedDestIdx];
+      if (!dest || dest.name.length < 2) {
+        setSuggestions([]);
+        return;
+      }
+  
       try {
         const response = await fetch(
           `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?namePrefix=${dest.name}`,
@@ -48,9 +78,11 @@ const NewTrip = () => {
       } catch (error) {
         setSuggestions([]);
       }
-    };
-    fetchSuggestions();
+    }, 500); // 500ms debounce
+  
+    return () => clearTimeout(timeout); // Cleanup on retype
   }, [destinations, selectedDestIdx]);
+  
 
   const [addTrip] = useMutation(ADD_TRIP, {
     refetchQueries: ['Me'],

@@ -15,6 +15,7 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: authMiddleware,
+  introspection: true, // ✅ Allows introspection locally or in dev mode
 });
 
 if (process.env.ENABLE_GRAPHQL !== 'false') {
