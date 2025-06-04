@@ -65,18 +65,19 @@
   margin-bottom: 1rem;
 }
 
-.profile-image {
-  width: 120px;
-  height: 120px;
+.profile-avatar-circle {
+  width: 100px;
+  height: 100px;
+  background-color: #e0e1dd; /* soft light gray instead of white */
+  color: #0D1B2A;             /* dark text */
+  font-size: 3rem;
+  font-weight: bold;
   border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid #339989;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.profile-image:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 12px rgba(0, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem auto 1rem auto;  /* more spacing from top */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 
 .itinerary-section {

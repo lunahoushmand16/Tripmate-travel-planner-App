@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 import { ADD_TRIP } from '../utils/mutations';
 import { useNavigate } from 'react-router-dom';
+import { GET_ME } from '../utils/queries';
 import './NewTrip.css';
 
 const emptyDestination = {
@@ -22,35 +23,6 @@ const NewTrip = () => {
   const [destinationInput, setDestinationInput] = useState('');
   const [selectedDestIdx, setSelectedDestIdx] = useState(null);
   const navigate = useNavigate();
-
-  // Fetch city suggestions for the currently edited destination
-  // useEffect(() => {
-  //   if (selectedDestIdx === null) return;
-  //   const dest = destinations[selectedDestIdx];
-  //   if (!dest || dest.name.length < 2) {
-  //     setSuggestions([]);
-  //     return;
-  //   }
-  //   const fetchSuggestions = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?namePrefix=${dest.name}`,
-  //         {
-  //           method: 'GET',
-  //           headers: {
-  //             'X-RapidAPI-Key': import.meta.env.VITE_RAPIDAPI_KEY,
-  //             'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com',
-  //           },
-  //         }
-  //       );
-  //       const data = await response.json();
-  //       setSuggestions(Array.isArray(data?.data) ? data.data : []);
-  //     } catch (error) {
-  //       setSuggestions([]);
-  //     }
-  //   };
-  //   fetchSuggestions();
-  // }, [destinations, selectedDestIdx]);
 
   useEffect(() => {
     const timeout = setTimeout(async () => {
@@ -83,10 +55,39 @@ const NewTrip = () => {
     return () => clearTimeout(timeout); // Cleanup on retype
   }, [destinations, selectedDestIdx]);
   
-
+  // Add Trip function
   const [addTrip] = useMutation(ADD_TRIP, {
-    refetchQueries: ['Me'],
-  });
+    refetchQueries: ['Me'], // this is still helpful as backup
+    update: (cache, { data }) => {
+      if (!data?.addTravelPlan) return;
+  
+      const newTrip = {
+        ...data.addTravelPlan,
+        __typename: 'TravelPlan',
+        destinations: (data.addTravelPlan.destinations || []).map(dest => ({
+          ...dest,
+          __typename: 'Destination',
+        })),
+      };
+  
+      try {
+        const existing = cache.readQuery({ query: GET_ME });
+  
+        cache.writeQuery({
+          query: GET_ME,
+          data: {
+            me: {
+              ...existing.me,
+              __typename: 'User',
+              travelPlans: [...(existing.me.travelPlans || []), newTrip],
+            },
+          },
+        });
+      } catch (err) {
+        console.error('❌ Apollo writeQuery failed:', err);
+      }
+    },
+  });    
 
   // Handle destination field changes
   const handleDestinationChange = (idx, field, value) => {

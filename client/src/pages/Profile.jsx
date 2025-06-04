@@ -1,20 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Profile.css';
 import Navbar from '../components/Navbar';
 import { useQuery } from '@apollo/client';
 import { GET_ME } from '../utils/queries';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
   const [selectedTrip, setSelectedTrip] = useState(null);
+  const navigate = useNavigate();
   
   // Add useQuery(GET_ME) to get real logged-in user
   //✅  Fetch logged-in user data, including their travel plans
   const { loading, data } = useQuery(GET_ME);
 
+  useEffect(() => {
+    if (!loading && !data?.me) {
+      navigate('/'); // ✅ redirect to homepage if not logged in
+    }
+  }, [loading, data]);
+
   if (loading) return <p>Loading profile...</p>;
-  if (!data || !data.me) {
-    return <p>Not authenticated</p>;
-  }
+  if (!data?.me) return null; // ✅ safely return nothing, we already redirected
   
   const user = data.me;
   const trips = user.travelPlans || [];
@@ -23,6 +29,9 @@ const Profile = () => {
     return (
       <div className="profile">
         <Navbar />
+        <div className="profile-avatar-circle">
+          <span>{user.username.charAt(0).toUpperCase()}</span>
+        </div>
         <h1 className="page-title">Welcome, {user.username}</h1>
         <p className="email">{user.email}</p>
         <p style={{ textAlign: 'center', marginTop: '2rem' }}>
@@ -30,55 +39,16 @@ const Profile = () => {
         </p>
       </div>
     );
-  }  
-
-  // Commented all hardcoded for newTrip cards
-
-  // const user = {
-  //   username: data.me.username,
-  //   email: data.me.email,
-  //   profileImage: '/profile photo1.jpg',
-  //   travelPlans: data.me.travelPlans || [], 
-  //   itinerary: [
-  //     {
-  //       destination: 'Greece',
-  //       image: '/Greece.jpg',
-  //       description: 'Explore ancient ruins in Athens, enjoy Santorini sunsets, and savor Mediterranean cuisine.',
-  //       date: 'May 18–25, 2025',
-  //       schedule: [
-  //         { time: '10:00 AM', activity: 'Visit Acropolis' },
-  //         { time: '1:00 PM', activity: 'Lunch in Plaka' },
-  //         { time: '3:00 PM', activity: 'Sunset at Oia' },
-  //       ],
-  //     },
-  //     {
-  //       destination: 'Paris',
-  //       image: '/paris.jpg',
-  //       description: 'Visit the Eiffel Tower, stroll the Seine, and explore iconic art at the Louvre.',
-  //       date: 'August 2–10, 2025',
-  //       schedule: [
-  //         { time: '9:00 AM', activity: 'Eiffel Tower Tour' },
-  //         { time: '12:00 PM', activity: 'Lunch by the Seine' },
-  //         { time: '3:00 PM', activity: 'Louvre Museum' },
-  //       ],
-  //     },
-  //     {
-  //       destination: 'Thailand',
-  //       image: '/Thailand.jpg',
-  //       description: 'Island hop in Krabi, explore Bangkok temples, and dive into spicy street food culture.',
-  //       date: 'March 12–20, 2026',
-  //       schedule: [
-  //         { time: '10:00 AM', activity: 'Island hopping in Krabi' },
-  //         { time: '1:00 PM', activity: 'Street food tour' },
-  //         { time: '4:00 PM', activity: 'Temple exploration' },
-  //       ],
-  //     },
-  //   ],
-  // };
+  } 
 
   return (
     <div className="profile">
       <Navbar />
+
+      {/* Profile picture /> */}
+      <div className="profile-avatar-circle">
+         <span>{user.username.charAt(0).toUpperCase()}</span>
+      </div>
 
       <h1 className="page-title">Welcome, {user.username}</h1>
       <p className="email">{user.email}</p>
