@@ -56,9 +56,10 @@ TripMate is a sleek travel app where friends can collaboratively plan trips, bui
 
 ### Screenshots:
 
-![]()
-![Login page]()
-![Look for the save books/Delete]()
+![Home Page](./client/public/Home-page.png)
+![Login page](./client/public/Login-page.png)
+![Sign up Page](./client/public/signup-page.png)
+![Profile Page](./client/public/Profile-page.png)
 
 ## 👥 Credits
 
@@ -115,4 +116,4 @@ This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) f
 
 ## Render Link
 
-[Render Web Service Link]()
+[Render Web Service Link](https://tripmate-travel-planner-app.onrender.com/)

@@ -1,1 +1,0 @@
-// Destination preview inside Trip View
