@@ -218,6 +218,111 @@
   color: #D3D3D3;
 }
 
+.modal-actions {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.edit-btn,
+.delete-btn {
+  padding: 10px 18px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s ease-in-out;
+}
+
+.edit-btn {
+  background-color: #49c5b6;
+  color: #ffffff;
+}
+
+.delete-btn {
+  background-color: #ff5e5e;
+  color: #ffffff;
+}
+
+.edit-btn:hover {
+  background-color: #3db3a5;
+}
+
+.delete-btn:hover {
+  background-color: #e04c4c;
+}
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  align-items: center;
+}
+/* Add this container to align Save/Cancel side-by-side */
+.edit-form .button-group {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.edit-form input,
+.edit-form textarea {
+  width: 90%;
+  padding: 0.6rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  resize: vertical;
+}
+
+.edit-form .button-group {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* Style the buttons */
+.edit-form .edit-btn,
+.edit-form .cancel-btn {
+  width: 100px;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+.edit-form .edit-btn {
+  background-color: #49c5b6;
+  color: white;
+}
+
+.edit-form .edit-btn:hover {
+  background-color: #3db3a5;
+}
+
+.edit-form .cancel-btn {
+  background-color: #888;
+  color: white;
+}
+
+.edit-form .cancel-btn:hover {
+  background-color: #666;
+}
+
+/* .edit-form .edit-btn,
+.edit-form .cancel-btn {
+  width: 100px;
+  font-size: 15px;
+} */
+
+/* Footer Start here */
 .footer {
   text-align: center;
   padding: 2rem 1rem 1rem;
