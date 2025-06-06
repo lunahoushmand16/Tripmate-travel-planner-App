@@ -68,15 +68,24 @@
   font-size: 1.2rem;
 }
 
-.login-btn {
-  margin-top: 1rem;
-  padding: 0.75rem 2rem;
-  background-color: #339989;
+.get-started-btn {
+  background-color: #49c5b6;
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 0.9rem 1.8rem;
   border: none;
-  border-radius: 4px;
-  color: #FFFAFB;
-  font-size: 1rem;
+  border-radius: 8px;
   cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25); /* 💥 subtle but noticeable */
+  letter-spacing: 0.5px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.get-started-btn:hover {
+  background-color: #3db3a5;
+  transform: translateY(-2px); /* 💫 slight lift on hover */
 }
 
 /* CAROUSEL */
