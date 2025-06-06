@@ -1,17 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import './Profile.css';
 import Navbar from '../components/Navbar';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { GET_ME } from '../utils/queries';
+import { DELETE_TRAVEL_PLAN, UPDATE_TRAVEL_PLAN } from '../utils/mutations';
 import { useNavigate, Link } from 'react-router-dom'; // ✅ ADDED Link for profile
+
+
 
 const Profile = () => {
   const [selectedTrip, setSelectedTrip] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editForm, setEditForm] = useState({ title: '', notes: '' });
   const navigate = useNavigate();
-  
   // Add useQuery(GET_ME) to get real logged-in user
   //✅  Fetch logged-in user data, including their travel plans
   const { loading, data } = useQuery(GET_ME);
+  const [deleteTravelPlan] = useMutation(DELETE_TRAVEL_PLAN, {
+    refetchQueries: [{ query: GET_ME }],
+  });
+
+  const [updateTravelPlan] = useMutation(UPDATE_TRAVEL_PLAN, {
+    refetchQueries: [{ query: GET_ME }],
+  });
 
   useEffect(() => {
     if (!loading && !data?.me) {
@@ -36,6 +47,28 @@ const Profile = () => {
   
   const user = data.me;
   const trips = user.travelPlans || [];
+
+  const handleDelete = async () => {
+    await deleteTravelPlan({ variables: { id: selectedTrip._id } });
+    setSelectedTrip(null);
+  };
+
+  const handleEditToggle = () => {
+    setEditForm({ title: selectedTrip.title, notes: selectedTrip.notes });
+    setIsEditing(true);
+  };
+
+  const handleEditSave = async () => {
+    await updateTravelPlan({
+      variables: {
+        id: selectedTrip._id,
+        title: editForm.title,
+        notes: editForm.notes,
+      },
+    });
+    setSelectedTrip(null);
+    setIsEditing(false);
+  };
   
   if (trips.length === 0) {
     return (
@@ -96,40 +129,66 @@ const Profile = () => {
 
       {/* Modal */}
       {selectedTrip && (
-     <div className="modal-overlay" onClick={() => setSelectedTrip(null)}>
-       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-         <button className="close-btn" onClick={() => setSelectedTrip(null)}>×</button>
+        <div className="modal-overlay" onClick={() => setSelectedTrip(null)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+          {!isEditing && (
+            <button className="close-btn" onClick={() => setSelectedTrip(null)}>×</button>
+          )}
+            {/* ✅ Dynamic image logic based on index */}
+            <img
+              src={`/default-trip-${trips.indexOf(selectedTrip) % 7 + 1}.jpg`}
+              alt={selectedTrip.title}
+              className="modal-image"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = '/default-trip-fallback.jpg';
+              }}
+            />
 
-         {/* ✅ Dynamic image logic based on index */}
-         <img
-         src={`/default-trip-${trips.indexOf(selectedTrip) % 7 + 1}.jpg`}
-         alt={selectedTrip.title}
-         className="modal-image"
-        onError={(e) => {
-        e.target.onerror = null;
-        e.target.src = '/default-trip-fallback.jpg';
-        }}
-        />
+            {!isEditing ? (
+              <>
+                <h2>{selectedTrip.title}</h2>
+                <p className="trip-date">{selectedTrip.startDate} – {selectedTrip.endDate}</p>
+                <p>{selectedTrip.notes}</p>
+                 {/* ✅ Show details of destinations and activities */}
+                {selectedTrip.destinations?.map((dest, idx) => (
+                  <div key={idx}>
+                    <h4>{dest.name}, {dest.location}</h4>
+                    <p>{dest.arrivalDate} – {dest.departureDate}</p>
+                    <ul className="trip-details-list">
+                      {dest.activities?.map((activity, aIdx) => (
+                        <li key={aIdx}>– {activity}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
 
-       <h2>{selectedTrip.title}</h2>
-       <p className="trip-date">{selectedTrip.startDate} – {selectedTrip.endDate}</p>
-       <p>{selectedTrip.notes}</p>
-
-       {/* ✅ Show details of destinations and activities */}
-       {selectedTrip.destinations?.map((dest, idx) => (
-        <div key={idx}>
-          <h4>{dest.name}, {dest.location}</h4>
-          <p>{dest.arrivalDate} – {dest.departureDate}</p>
-          <ul className="trip-details-list">
-            {dest.activities?.map((activity, aIdx) => (
-              <li key={aIdx}>– {activity}</li>
-            ))}
-          </ul>
+                <div className="modal-actions">
+                  <button className="edit-btn" onClick={handleEditToggle}>Edit</button>
+                  <button className="delete-btn" onClick={handleDelete}>Delete</button>
+                </div>
+              </>
+            ) : (
+              <div className="edit-form">
+                <input
+                  type="text"
+                  value={editForm.title}
+                  onChange={(e) => setEditForm({ ...editForm, title: e.target.value })}
+                />
+                <textarea
+                  rows="3"
+                  value={editForm.notes}
+                  onChange={(e) => setEditForm({ ...editForm, notes: e.target.value })}
+                />
+                <div className="button-group">
+                  <button className="edit-btn" onClick={handleEditSave}>Save</button>
+                  <button className="cancel-btn" onClick={() => setIsEditing(false)}>Cancel</button>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
-       ))}
-      </div>
-     </div>
-    )}
+      )}
 
       <footer className="footer">
         <p>© 2025 TripMate. All rights reserved.</p>
