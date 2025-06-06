@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick-theme.css";
 import './Home.css';
 import Navbar from '../components/Navbar';
 import { Link } from 'react-router-dom';
+import Auth from '../utils/auth';
 
 const Home = () => {
   const sliderSettings = {
@@ -24,10 +25,13 @@ const Home = () => {
       <div className="hero">
         <h1>Welcome to TripMate</h1>
         <p>Plan and organize your trips with ease.</p>
-        <button className="login-btn">
-        <Link to="/login" style={{ color: 'inherit', textDecoration: 'none' }}>
-        Login
-        </Link>
+        <button className="get-started-btn">
+          <Link
+           to={Auth.loggedIn() ? "/profile" : "/login"}
+           style={{ color: 'inherit', textDecoration: 'none' }}
+           >
+          Get Started
+          </Link>
         </button>
       </div>
 
