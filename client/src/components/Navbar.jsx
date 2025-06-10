@@ -29,7 +29,7 @@ const Navbar = () => {
         {Auth.loggedIn() ? (
           <li><button onClick={handleLogout} className="logout-btn">Log Out</button></li>
         ) : (
-          <li><Link to="/">Log In</Link></li>
+          <li><Link to="/login">Log In</Link></li> 
         )}
       </ul>
     </nav>
